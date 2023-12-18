@@ -1,0 +1,45 @@
+* {
+  font-family: "Voltaire", sans-serif;
+}
+
+.table-crm {
+  table-layout: fixed;
+  width: 100%;
+  white-space: normal;
+  font-size: smaller;
+}
+
+.table-crm td:nth-child(2) {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: scroll;
+}
+
+.name {
+  width: 25%;
+}
+.mail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 30%;
+}
+.role {
+  width: 20%;
+}
+.delete {
+  width: 20%;
+}
+
+.edit {
+  width: 20%;
+}
+.footer {
+  position: absolute;
+  left: 0;
+  /* bottom: 0; */
+  width: 100%;
+  background-color: hsl(146, 51%, 85%);
+  /* color: white; */
+  text-align: center;
+  display: flex;
+}
