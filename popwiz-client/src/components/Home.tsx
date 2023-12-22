@@ -2,14 +2,18 @@ import { FunctionComponent, useEffect, useState } from "react";
 import Product from "../interfaces/Product";
 import { getProductByLicense } from "../services/productsServices";
 import { Link, useNavigate } from "react-router-dom";
-import { updateCart } from "../services/cartsServices";
+import { getCart, updateCart } from "../services/cartsServices";
 import Footer from "./Footer";
+import { log } from "console";
+import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface HomeProps {
   setUserInfo: Function;
   userInfo: any;
   searchValue: string;
   setSearchValue: any;
+  userCart: [];
+  setUserCart: any;
   onDisplay: () => void;
   onHide: () => void;
 }
@@ -18,22 +22,16 @@ const Home: FunctionComponent<HomeProps> = ({
   userInfo,
   searchValue,
   setSearchValue,
+  // userCart,
+  // setUserCart,
   onDisplay,
   onHide,
 }) => {
-  // let navigate = useNavigate();
   let [products, setProducts] = useState<Product[]>([]);
   const [currentLicense, setCurrentLicense] = useState<string | null>(null);
+  const [inCart, setInCart] = useState<boolean>(true || false);
+  const [userCart, setUserCart] = useState<any>([]);
 
-  useEffect(() => {
-    // Call onDisplay when Home is displayed
-    onDisplay();
-
-    return () => {
-      // Call onHide when Home is not displayed anymore
-      onHide();
-    };
-  }, [onDisplay]);
   const handleLicense = async (selectedLicense: string) => {
     try {
       const response = await getProductByLicense(selectedLicense);
@@ -44,20 +42,37 @@ const Home: FunctionComponent<HomeProps> = ({
     }
   };
 
-  useEffect(() => {
-    // Fetch all products when the component mounts
-    handleLicense("");
-  }, []);
+  let handleAddToCart = async (products: Product) => {
+    try {
+      if (userInfo) {
+        const res = await updateCart(products);
+        const { action, message } = res.data;
 
-  let handleAddToCart = (products: Product) => {
-    if (userInfo) {
-      updateCart(products)
-        .then((res) => alert("Product added to cart!"))
-        .catch((err) => console.log(err));
-    } else {
-      alert("you need to sign in");
+        if (action === "add") {
+          successMsg("Product added to cart");
+        } else if (action === "remove") {
+          successMsg("Product removed from cart");
+        }
+        // setInCart(!inCart);
+      } else {
+        errorMsg("You need to sign in");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  useEffect(() => {
+    onDisplay();
+    handleLicense("");
+    getCart(userInfo._id)
+      .then((res) => setUserCart(res.data))
+      .catch((err) => console.log(err));
+    return () => {
+      // Call onHide when Home is not displayed anymore
+      onHide();
+    };
+  }, [onDisplay, userCart]);
 
   return (
     <>
@@ -115,39 +130,49 @@ const Home: FunctionComponent<HomeProps> = ({
                 >
                   <i className="bi bi-heart text-danger text-end"></i>
                   <Link
-                    to={`products/products-info/${products._id}`}
+                    to={`products/product-info/${products._id}`}
                     style={{ textDecoration: "none", color: "black" }}
                   >
                     <img src={products.image} className="card-img-top" alt={products.imageAlt} />
-                    <div
-                      className="card-body"
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <p className="card-text">{products.license}</p>
-                      <p className="card-text">{products.name}</p>
-                      <h5 className="card-title">{products.price}$</h5>
-                      <div className=" px-3">
+                  </Link>
+                  <div
+                    className="card-body"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <p className="card-text">{products.license}</p>
+                    <p className="card-text">{products.name}</p>
+                    <h5 className="card-title">{products.price}$</h5>
+                    <div className=" px-3">
+                      {/* <button
+                        type="button"
+                        className="btn mb-2 rounded-pill border-success"
+                        onClick={() => handleAddToCart(products)}
+                      > */}
+                      {!!userCart.find((item: Product) => item._id === products._id) ? (
                         <button
                           type="button"
-                          className="btn mb-2 rounded-pill border-success"
+                          className="btn mb-2 rounded-pill"
                           onClick={() => handleAddToCart(products)}
-                          style={{ backgroundColor: "white" }}
-                        >
-                          ADD TO CART
-                        </button>
-                        <button
-                          type="button"
-                          className="btn mb-2"
-                          onClick={() => handleAddToCart(products)}
+                          style={{ backgroundColor: "black", color: "white" }}
                         >
                           REMOVE FROM CART
                         </button>
-                      </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn mb-2 rounded-pill"
+                          onClick={() => handleAddToCart(products)}
+                          style={{ backgroundColor: "lightGray", color: "black" }}
+                        >
+                          ADD TO CART
+                        </button>
+                      )}
+                      {/* </button> */}
                     </div>
-                  </Link>
+                  </div>
                 </div>
               ))
           ) : (

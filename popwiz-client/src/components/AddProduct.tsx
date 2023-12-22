@@ -3,6 +3,7 @@ import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { addProduct } from "../services/productsServices";
+import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface AddProductProps {
   setUserInfo: Function;
@@ -40,11 +41,11 @@ const AddProduct: FunctionComponent<AddProductProps> = ({ userInfo, setUserInfo 
       addProduct(values)
         .then((res) => {
           navigate("/");
-          alert("Card added successfully!");
+          successMsg("Card added successfully!");
         })
         .catch((error) => {
           if (error.response && error.response.status === 400) {
-            alert(error.response.data);
+            errorMsg(error.response.data);
           } else {
             console.error("Error:", error);
           }

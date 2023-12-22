@@ -3,6 +3,7 @@ import User from "../interfaces/User";
 import { deleteUser, getUsers } from "../services/usersServices";
 import { Link, useNavigate } from "react-router-dom";
 import AddProduct from "./AddProduct";
+import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface CRMProps {
   userInfo: any;
@@ -20,7 +21,7 @@ const CRM: FunctionComponent<CRMProps> = ({ userInfo, setUserInfo }) => {
   };
   useEffect(() => {
     if (!userInfo.isAdmin) {
-      alert("You are Not authorized");
+      errorMsg("You are Not authorized");
       navigate("/");
       return;
     }
@@ -33,7 +34,7 @@ const CRM: FunctionComponent<CRMProps> = ({ userInfo, setUserInfo }) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       deleteUser(user._id as string)
         .then((res) => {
-          alert("User removed successfully");
+          successMsg("User removed successfully");
 
           render();
         })

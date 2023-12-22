@@ -4,6 +4,7 @@ import { addOrRemoveProduct, getCart, updateCart } from "../services/cartsServic
 import Product from "../interfaces/Product";
 import { Link } from "react-router-dom";
 import { error } from "console";
+import Modal from "./Modal";
 
 interface UserCartProps {
   setUserInfo: Function;
@@ -61,9 +62,7 @@ const UserCart: FunctionComponent<UserCartProps> = ({ userInfo, setUserInfo }) =
               </tbody>
             </table>
             <div>
-              <button type="button" className="btn btn-success ">
-                <i className="bi bi-credit-card"> Pay Now</i>
-              </button>
+              <Modal />
             </div>
           </>
         ) : (

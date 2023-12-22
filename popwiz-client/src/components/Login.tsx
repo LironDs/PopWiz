@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { checkUser, getTokenDetails } from "../services/usersServices";
 import { log } from "console";
+import { errorMsg } from "../services/feedbacksServices";
 
 interface LoginProps {
   setUserInfo: Function;
@@ -30,7 +31,7 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
           navigate("/");
           console.log(getTokenDetails());
         })
-        .catch((err) => alert("Wrong email or password"));
+        .catch((err) => errorMsg("Wrong email or password"));
     },
   });
   return (

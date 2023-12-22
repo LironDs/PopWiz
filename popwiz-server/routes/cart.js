@@ -5,7 +5,6 @@ const auth = require("../middlewares/auth");
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 
-console.log("1");
 ////update cart
 router.post("/", auth, async (req, res) => {
   try {
@@ -53,7 +52,7 @@ router.post("/", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   try {
     ///check if id match
-    console.log(req.payload._id);
+    // console.log(req.payload._id);
     let userCart = await Cart.findOne({ userId: req.payload._id });
     if (!userCart) return res.status(400).send("user not found");
 

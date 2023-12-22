@@ -36,7 +36,7 @@ const ProductInfo: FunctionComponent<ProductInfoProps> = ({ userInfo }) => {
 
   return (
     <>
-      <div className="container">
+      <div className="container" style={{ minHeight: "66vh" }}>
         <div className="row align-content-between d-flex">
           <div className="col-lg" style={{ backgroundColor: "rgb(240, 245, 245" }}>
             {/* <i

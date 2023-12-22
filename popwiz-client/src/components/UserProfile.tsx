@@ -4,6 +4,7 @@ import * as yup from "yup";
 import User from "../interfaces/User";
 import { getUserById, updateUser } from "../services/usersServices";
 import { useFormik } from "formik";
+import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface UserProfileProps {
   setUserInfo: Function;
@@ -50,11 +51,11 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
       updateUser(String(_id), values)
         .then((res) => {
           navigate("/");
-          alert("user updated successfully!");
+          successMsg("user updated successfully!");
         })
         .catch((error) => {
           if (error.response && error.response.status === 400) {
-            alert(error.response.data); // Display the error message in an alert
+            errorMsg(error.response.data); // Display the error message in an feedback msg
           } else {
             console.error("Error:", error);
           }

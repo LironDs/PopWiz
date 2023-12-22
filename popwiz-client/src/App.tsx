@@ -13,7 +13,11 @@ import UserCart from "./components/UserCart";
 import CRM from "./components/CRM";
 import ProductInfo from "./components/ProductInfo";
 import Footer from "./components/Footer";
+import Modal from "./components/Modal";
 import About from "./components/About";
+import { getCart } from "./services/cartsServices";
+import Product from "./interfaces/Product";
+import { ToastContainer } from "react-toastify";
 
 export interface TokenDetails {
   _id: string;
@@ -24,19 +28,31 @@ function App() {
   let [userInfo, setUserInfo] = useState<TokenDetails | false>(false);
   const [searchValue, setSearchValue] = useState("");
   const [showSearchField, setShowSearchField] = useState(false);
+  const [userCart, setUserCart] = useState<any>([]);
 
   useEffect(() => {
-    try {
-      const userDetails: TokenDetails | null = getTokenDetails();
-      setUserInfo(userDetails || false);
-      console.log(userDetails);
-      console.log("rendered!!");
-    } catch (error) {
-      console.log("error");
-    }
+    const fetchData = async () => {
+      try {
+        const userDetails: TokenDetails | null = getTokenDetails();
+        setUserInfo(userDetails || false);
+
+        if (userDetails) {
+          const cartData = await getCart(userDetails._id);
+          setUserCart(cartData.data);
+          console.log("User Cart:", cartData.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
   return (
     <div className="App">
+      {/* <Modal /> */}
+      <ToastContainer />
       <Router>
         <Navbar
           setSearchValue={setSearchValue}
@@ -54,6 +70,8 @@ function App() {
                 searchValue={searchValue}
                 setUserInfo={setUserInfo}
                 userInfo={userInfo}
+                userCart={userCart}
+                setUserCart={setUserCart}
                 onDisplay={() => setShowSearchField(true)}
                 onHide={() => setShowSearchField(false)}
               />

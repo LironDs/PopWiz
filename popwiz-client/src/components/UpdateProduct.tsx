@@ -4,6 +4,7 @@ import Product from "../interfaces/Product";
 import { getProductById, updateProduct } from "../services/productsServices";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface UpdateProductProps {
   setUserInfo: Function;
@@ -60,11 +61,11 @@ const UpdateProduct: FunctionComponent<UpdateProductProps> = ({ userInfo, setUse
       updateProduct(values, String(_id))
         .then((res) => {
           navigate("/");
-          alert("Product updated successfully!");
+          successMsg("Product updated successfully!");
         })
         .catch((error) => {
           if (error.response && error.response.status === 400) {
-            alert(error.response.data); // Display the error message in an alert
+            errorMsg(error.response.data); // Display the error message in an feedback Msg
           } else {
             console.error("Error:", error);
           }

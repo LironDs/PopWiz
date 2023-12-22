@@ -33,17 +33,6 @@ export async function updateCart(productToAdd: Product) {
 export async function addOrRemoveProduct(productToAdd: Product) {
   try {
     const response = await updateCart(productToAdd);
-    const { action, message } = response.data;
-
-    if (response.status === 200 || 201) {
-      ////if added to cart
-      if (action === "add") {
-        alert("Product added to cart");
-        /////if removed from cart
-      } else if (action === "remove") {
-        alert("Product removed from cart");
-      }
-    }
   } catch (error) {
     console.error("An error occurred", error);
   }

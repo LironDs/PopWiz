@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TokenDetails } from "../App";
+import { successMsg } from "../services/feedbacksServices";
 
 interface NavbarProps {
   setUserInfo: Function;
@@ -24,7 +25,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
     sessionStorage.removeItem("userInfo");
     sessionStorage.removeItem("token");
     navigate("/");
-    alert("You have logged out!");
+    successMsg("You have logged out!");
     render();
   };
 
@@ -68,7 +69,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
                 </>
               )}
             </ul>
-            <ul className="navbar-nav px-2 align-items-center justify-content-center">
+            <ul className="navbar-nav px-2  justify-content-center">
               {showSearchField && (
                 <form className="d-flex" role="search">
                   <input
