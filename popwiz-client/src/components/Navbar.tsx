@@ -33,9 +33,9 @@ const Navbar: FunctionComponent<NavbarProps> = ({
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark px-4" data-bs-theme="dark">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             <img src="/logo-no-background.png" alt="Bootstrap" width="150" />
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -59,7 +59,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({
                   About
                 </Link>
               </li>
-              {userInfo && "isAdmin" in userInfo && (
+              {userInfo && userInfo.isAdmin && (
                 <>
                   <li className="nav-item">
                     <Link className="nav-link active" to="crm">
@@ -77,7 +77,6 @@ const Navbar: FunctionComponent<NavbarProps> = ({
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
-                    // value={searchTerm}
                     onChange={(e) => setSearchValue(e.target.value)}
                   />
                 </form>

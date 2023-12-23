@@ -39,10 +39,6 @@ const ProductInfo: FunctionComponent<ProductInfoProps> = ({ userInfo }) => {
       <div className="container" style={{ minHeight: "66vh" }}>
         <div className="row align-content-between d-flex">
           <div className="col-lg" style={{ backgroundColor: "rgb(240, 245, 245" }}>
-            {/* <i
-            className="bi bi-heart text-danger"
-            style={{ fontSize: "30px", position: "absolute", marginLeft: "10px" }}
-          ></i> */}
             <img
               src={product.image}
               alt={product.imageAlt}

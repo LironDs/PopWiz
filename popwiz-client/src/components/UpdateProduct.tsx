@@ -57,7 +57,6 @@ const UpdateProduct: FunctionComponent<UpdateProductProps> = ({ userInfo, setUse
       inStock: yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log(_id);
       updateProduct(values, String(_id))
         .then((res) => {
           navigate("/");
@@ -214,13 +213,10 @@ const UpdateProduct: FunctionComponent<UpdateProductProps> = ({ userInfo, setUse
               <select
                 className="form-control form-select"
                 id="inStock"
-                //   placeholder="select category"
                 name="inStock"
-                // value={formik.values.inStock}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               >
-                {/* <option value="DEFAULT">Choose one</option> */}
                 <option selected>Choose one</option>
 
                 <option value="true">In Stock</option>

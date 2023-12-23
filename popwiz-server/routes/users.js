@@ -14,14 +14,11 @@ const userSchema = joi.object({
 
 ///get user by _id
 router.get("/:_id", auth, async (req, res) => {
-  console.log(req.params._id);
-
   try {
     // Check if user is authorized to update the userProfile
     if (!(req.payload._id === req.params._id || req.payload.isAdmin)) {
       return res.status(403).send("Permission denied");
     }
-    console.log("1");
     ////2. check user details
     const user = await User.findById(req.params._id);
     if (!user) return res.status(400).send("No such user");
@@ -36,7 +33,6 @@ router.get("/:_id", auth, async (req, res) => {
 router.put("/:_id", auth, async (req, res) => {
   try {
     // joi validation for body
-    console.log(req.body);
     const { error } = userSchema.validate(req.body);
     if (error) return res.status(400).send(error);
 

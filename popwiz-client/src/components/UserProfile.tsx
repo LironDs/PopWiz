@@ -23,8 +23,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
   });
 
   useEffect(() => {
-    console.log(_id);
-
     getUserById(String(_id))
       .then((res) => {
         setUser(res.data);
@@ -47,7 +45,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
       password: yup.string().required().min(8),
     }),
     onSubmit: (values) => {
-      console.log(_id);
       updateUser(String(_id), values)
         .then((res) => {
           navigate("/");
@@ -89,7 +86,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
                 type="text"
                 className="form-control"
                 id="lastName"
-                // placeholder="John Doe"
                 name="lastName"
                 value={formik.values.lastName}
                 onChange={formik.handleChange}
@@ -107,7 +103,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
                 type="email"
                 className="form-control"
                 id="email"
-                // placeholder="John Doe"
                 name="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -123,7 +118,6 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
                 type="password"
                 className="form-control"
                 id="password"
-                // placeholder="John Doe"
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}

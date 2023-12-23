@@ -26,7 +26,6 @@ router.get("/search", async (req, res) => {
     });
 
     res.json(products);
-    console.log(products);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

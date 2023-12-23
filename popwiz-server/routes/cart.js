@@ -8,18 +8,20 @@ const Product = require("../models/Product");
 ////update cart
 router.post("/", auth, async (req, res) => {
   try {
-    ///Check if user have cart array
+    /// Check if user has a cart array
     let userCart = await Cart.findOne({ userId: req.payload._id });
-    if (!userCart)
-      res.status(400).json({
+    if (!userCart) {
+      return res.status(400).json({
         status: "error",
         action: "add",
         message: "No user Cart",
       });
-    ///check if product is in cart
+    }
+
+    /// Check if the product is in the cart
     let productIndex = userCart.products.indexOf(req.body._id);
 
-    // If product is in cart, remove it
+    // If the product is in the cart, remove it
     if (productIndex !== -1) {
       userCart.products.splice(productIndex, 1);
       await userCart.save();
@@ -28,19 +30,19 @@ router.post("/", auth, async (req, res) => {
         action: "remove",
         message: "Product removed from cart",
       });
-
-      ////if it isn't-add it
-    } else {
-      userCart.products.push(req.body._id);
-      await userCart.save();
-      return res.status(201).json({
-        status: "success",
-        action: "add",
-        message: "Product added to Carts",
-      });
     }
+
+    //// If it isn't, add it
+    userCart.products.push(req.body._id);
+    await userCart.save();
+    return res.status(201).json({
+      status: "success",
+      action: "add",
+      message: "Product added to Carts",
+    });
   } catch (error) {
-    return res.status(400).json({
+    console.error(error); // Log the error for debugging
+    return res.status(500).json({
       status: "error",
       action: "unknown",
       message: "An error occurred",
@@ -52,7 +54,6 @@ router.post("/", auth, async (req, res) => {
 router.get("/", auth, async (req, res) => {
   try {
     ///check if id match
-    // console.log(req.payload._id);
     let userCart = await Cart.findOne({ userId: req.payload._id });
     if (!userCart) return res.status(400).send("user not found");
 

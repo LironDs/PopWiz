@@ -1,10 +1,8 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import Product from "../interfaces/Product";
 import { getProductByLicense } from "../services/productsServices";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getCart, updateCart } from "../services/cartsServices";
-import Footer from "./Footer";
-import { log } from "console";
 import { errorMsg, successMsg } from "../services/feedbacksServices";
 
 interface HomeProps {
@@ -12,24 +10,14 @@ interface HomeProps {
   userInfo: any;
   searchValue: string;
   setSearchValue: any;
-  userCart: [];
-  setUserCart: any;
+
   onDisplay: () => void;
   onHide: () => void;
 }
 
-const Home: FunctionComponent<HomeProps> = ({
-  userInfo,
-  searchValue,
-  setSearchValue,
-  // userCart,
-  // setUserCart,
-  onDisplay,
-  onHide,
-}) => {
+const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, onHide }) => {
   let [products, setProducts] = useState<Product[]>([]);
   const [currentLicense, setCurrentLicense] = useState<string | null>(null);
-  const [inCart, setInCart] = useState<boolean>(true || false);
   const [userCart, setUserCart] = useState<any>([]);
 
   const handleLicense = async (selectedLicense: string) => {
@@ -53,7 +41,6 @@ const Home: FunctionComponent<HomeProps> = ({
         } else if (action === "remove") {
           successMsg("Product removed from cart");
         }
-        // setInCart(!inCart);
       } else {
         errorMsg("You need to sign in");
       }
@@ -63,12 +50,21 @@ const Home: FunctionComponent<HomeProps> = ({
   };
 
   useEffect(() => {
+    console.log("Calling useEffect");
+
     onDisplay();
     handleLicense("");
-    getCart(userInfo._id)
-      .then((res) => setUserCart(res.data))
-      .catch((err) => console.log(err));
+
+    //Check if userInfo is defined before accessing _id
+    if (userInfo && userInfo._id) {
+      getCart(userInfo._id)
+        .then((res) => setUserCart(res.data))
+        .catch((err) => console.log(err));
+    }
+
     return () => {
+      console.log("Calling onHide");
+
       // Call onHide when Home is not displayed anymore
       onHide();
     };
@@ -146,11 +142,6 @@ const Home: FunctionComponent<HomeProps> = ({
                     <p className="card-text">{products.name}</p>
                     <h5 className="card-title">{products.price}$</h5>
                     <div className=" px-3">
-                      {/* <button
-                        type="button"
-                        className="btn mb-2 rounded-pill border-success"
-                        onClick={() => handleAddToCart(products)}
-                      > */}
                       {!!userCart.find((item: Product) => item._id === products._id) ? (
                         <button
                           type="button"
@@ -170,7 +161,6 @@ const Home: FunctionComponent<HomeProps> = ({
                           ADD TO CART
                         </button>
                       )}
-                      {/* </button> */}
                     </div>
                   </div>
                 </div>

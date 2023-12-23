@@ -6,7 +6,7 @@ let api: string = `${process.env.REACT_APP_API}/products`;
 export function addProduct(newProduct: Product) {
   return axios.post(api, newProduct, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }
@@ -20,7 +20,7 @@ export function getProductById(_id: string) {
 export function updateProduct(updatedProduct: Product, _id: string) {
   return axios.put(`${api}/${_id}`, updatedProduct, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }

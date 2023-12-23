@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { addUser, getTokenDetails } from "../services/usersServices";
 import { userInfo } from "os";
+import { successMsg } from "../services/feedbacksServices";
 
 interface RegisterProps {
   setUserInfo: Function;
@@ -29,20 +30,15 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
       addUser({ ...values, isAdmin: false })
         .then((res) => {
           navigate("/");
-          // successMsg(`You have registered successfully and logged in as ${values.email}`);
-          sessionStorage.setItem(
-            "token",
-            JSON.stringify({
-              token: res.data,
-            })
-          );
+          successMsg(`You have registered successfully and logged in as ${values.email}`);
+          sessionStorage.setItem("token", res.data);
         })
         .catch((err) => console.log(err));
     },
   });
   return (
     <>
-      <div className="container text-center">
+      <div className="container text-center" style={{ minHeight: "73vh" }}>
         <form onSubmit={formik.handleSubmit}>
           <div className="flex row align-items-center justify-content-center mb-3 ">
             <div className="col-md-5">
@@ -79,7 +75,6 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
                   type="text"
                   className="form-control"
                   id="lastName"
-                  // placeholder="John Doe"
                   name="lastName"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
@@ -97,7 +92,6 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
                   type="email"
                   className="form-control"
                   id="email"
-                  // placeholder="John Doe"
                   name="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
@@ -113,7 +107,6 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
                   type="text"
                   className="form-control"
                   id="password"
-                  // placeholder="John Doe"
                   name="password"
                   value={formik.values.password}
                   onChange={formik.handleChange}

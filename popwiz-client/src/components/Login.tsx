@@ -5,6 +5,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { checkUser, getTokenDetails } from "../services/usersServices";
 import { log } from "console";
 import { errorMsg } from "../services/feedbacksServices";
+import { jwtDecode } from "jwt-decode";
 
 interface LoginProps {
   setUserInfo: Function;
@@ -26,10 +27,16 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
     onSubmit(values) {
       checkUser(values)
         .then((res) => {
-          sessionStorage.setItem("token", JSON.stringify({ token: res.data }));
-          setUserInfo(res.data);
+          const token = res.data;
+          const decodedUser = jwtDecode(token);
+
+          // Set the decoded user information in the userInfo state
+          setUserInfo(decodedUser);
+
+          // Store the token in sessionStorage
+          sessionStorage.setItem("token", token);
+
           navigate("/");
-          console.log(getTokenDetails());
         })
         .catch((err) => errorMsg("Wrong email or password"));
     },

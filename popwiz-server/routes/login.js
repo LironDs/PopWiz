@@ -4,7 +4,6 @@ const joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-// const User = require("../models/User");
 
 const loginSchema = joi.object({
   firstName: joi.string().min(2),

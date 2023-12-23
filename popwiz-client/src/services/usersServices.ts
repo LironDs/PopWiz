@@ -5,9 +5,10 @@ import { TokenDetails } from "../App";
 
 let api: string = `${process.env.REACT_APP_API}/users`;
 type userLogin = Pick<User, "email" | "password">;
+
 ////Register
 export function addUser(newUser: User) {
-  return axios.post(`${api}/register`, newUser);
+  return axios.post(`http://localhost:10000/api/register`, newUser);
 }
 ///Login
 export function checkUser(userToCheck: userLogin) {
@@ -18,21 +19,21 @@ export function checkUser(userToCheck: userLogin) {
 export function updateUser(_id: string, updatedUser: User) {
   return axios.put(`${api}/${_id}`, updatedUser, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }
 export function getUserById(_id: string) {
   return axios.get(`${api}/${_id}`, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }
 export function getUsers() {
   return axios.get(api, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }
@@ -40,12 +41,25 @@ export function getUsers() {
 export function deleteUser(_id: string) {
   return axios.delete(`${api}/${_id}`, {
     headers: {
-      Authorization: JSON.parse(sessionStorage.getItem("token") as string).token,
+      Authorization: sessionStorage.getItem("token") as string,
     },
   });
 }
+
 export function getTokenDetails(): TokenDetails | null {
   const storedToken = sessionStorage.getItem("token");
 
-  return storedToken ? jwtDecode(JSON.parse(storedToken).token) : null;
+  // Check if the token is present
+  if (!storedToken) {
+    return null; // No token available
+  }
+
+  try {
+    // Attempt to decode the token
+    const decodedToken: TokenDetails = jwtDecode(storedToken);
+    return decodedToken;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null; // Handle the case where decoding fails
+  }
 }

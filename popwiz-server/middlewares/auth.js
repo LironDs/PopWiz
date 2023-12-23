@@ -8,6 +8,7 @@ module.exports = (req, res, next) => {
     if (!token) return res.status(401).send("Access denied, no valid token");
     //2.check the token
     const payload = jwt.verify(token, process.env.jwtKey);
+
     //3.save the payload(the hidden details in the token) in the req
     req.payload = payload;
     next();

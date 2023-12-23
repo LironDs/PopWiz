@@ -13,11 +13,9 @@ import UserCart from "./components/UserCart";
 import CRM from "./components/CRM";
 import ProductInfo from "./components/ProductInfo";
 import Footer from "./components/Footer";
-import Modal from "./components/Modal";
 import About from "./components/About";
-import { getCart } from "./services/cartsServices";
-import Product from "./interfaces/Product";
 import { ToastContainer } from "react-toastify";
+import PageNotFound from "./components/PageNotFound";
 
 export interface TokenDetails {
   _id: string;
@@ -28,19 +26,12 @@ function App() {
   let [userInfo, setUserInfo] = useState<TokenDetails | false>(false);
   const [searchValue, setSearchValue] = useState("");
   const [showSearchField, setShowSearchField] = useState(false);
-  const [userCart, setUserCart] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userDetails: TokenDetails | null = getTokenDetails();
         setUserInfo(userDetails || false);
-
-        if (userDetails) {
-          const cartData = await getCart(userDetails._id);
-          setUserCart(cartData.data);
-          console.log("User Cart:", cartData.data);
-        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,7 +42,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Modal /> */}
       <ToastContainer />
       <Router>
         <Navbar
@@ -70,8 +60,6 @@ function App() {
                 searchValue={searchValue}
                 setUserInfo={setUserInfo}
                 userInfo={userInfo}
-                userCart={userCart}
-                setUserCart={setUserCart}
                 onDisplay={() => setShowSearchField(true)}
                 onHide={() => setShowSearchField(false)}
               />
@@ -104,6 +92,7 @@ function App() {
             element={<UserCart setUserInfo={setUserInfo} userInfo={userInfo} />}
           />
           <Route path="crm" element={<CRM userInfo={userInfo} setUserInfo={setUserInfo} />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
       </Router>
