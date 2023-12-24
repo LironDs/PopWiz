@@ -1,5 +1,6 @@
   
-# PopWiz!
+![Logo PopWiz](popwiz-client/public/logo-no-background.png)
+# Welcome!
 
   
 
