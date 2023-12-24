@@ -15,6 +15,7 @@ const AddProduct: FunctionComponent<AddProductProps> = ({ userInfo, setUserInfo 
   useEffect(() => {
     formik.setFieldValue("price", "");
   }, []);
+
   let formik = useFormik({
     initialValues: {
       image: "",

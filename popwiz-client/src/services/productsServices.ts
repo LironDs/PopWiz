@@ -45,3 +45,12 @@ export const searchProducts = async (searchTerm: string) => {
     throw error;
   }
 };
+
+////delete product by admin
+export function deleteProduct(_id: string) {
+  return axios.delete(`${api}/${_id}`, {
+    headers: {
+      Authorization: sessionStorage.getItem("token") as string,
+    },
+  });
+}

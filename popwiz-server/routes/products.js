@@ -8,7 +8,7 @@ const auth = require("../middlewares/auth");
 const productSchema = joi.object({
   image: joi.string().required(),
   imageAlt: joi.string().required(),
-  license: joi.string().required().min(2),
+  category: joi.string().required().min(2),
   name: joi.string().required().min(2),
   price: joi.number().required().min(2),
   description: joi.string().required().min(6),
@@ -112,6 +112,23 @@ router.put("/:_id", auth, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).send("catch error");
+  }
+});
+
+////delete product by admin
+router.delete("/:_id", auth, async (req, res) => {
+  try {
+    ///check if admin
+    const checkAdmin = req.payload.isAdmin;
+    if (!checkAdmin) return res.status(403).send("You are not authorized");
+    ///check if user exist
+    const productToDelete = await Product.findByIdAndDelete({
+      _id: req.params._id,
+    });
+    if (!productToDelete) return res.status(400).send("No such product");
+    res.status(200).send("product removed");
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 

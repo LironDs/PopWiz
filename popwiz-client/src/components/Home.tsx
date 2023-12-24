@@ -1,9 +1,10 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import Product from "../interfaces/Product";
-import { getProductByLicense } from "../services/productsServices";
+import { deleteProduct, getProductByLicense } from "../services/productsServices";
 import { Link } from "react-router-dom";
 import { getCart, updateCart } from "../services/cartsServices";
 import { errorMsg, successMsg } from "../services/feedbacksServices";
+import { error } from "console";
 
 interface HomeProps {
   setUserInfo: Function;
@@ -51,7 +52,17 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
       console.log(error);
     }
   };
+  const handleDeleteProduct = (_id: string) => {
+    if (window.confirm("Delete this product?")) {
+      deleteProduct(_id)
+        .then((res) => {
+          successMsg("Product deleted successfully");
+          setProducts(products.filter((item: Product) => item._id !== _id));
+        })
 
+        .catch((error) => console.error(error));
+    }
+  };
   useEffect(() => {
     console.log("Calling useEffect");
 
@@ -75,7 +86,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
 
   return (
     <>
-      <div className="container pt-5" style={{ position: "relative", minHeight: "66vh" }}>
+      <div className="container pt-3" style={{ position: "relative", minHeight: "66vh" }}>
         <div className="container mb-3 row align-items-center ">
           <div className="col-md-4 text-center">
             <h1>Choose your PoP! :</h1>
@@ -145,27 +156,44 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
                     <p className="card-text">{products.license}</p>
                     <p className="card-text">{products.name}</p>
                     <h5 className="card-title">{products.price}$</h5>
-                    <div className=" px-3">
-                      {!!userCart.find((item: Product) => item._id === products._id) ? (
-                        <button
-                          type="button"
-                          className="btn mb-2 rounded-pill"
-                          onClick={() => handleAddToCart(products)}
-                          style={{ backgroundColor: "black", color: "white" }}
-                        >
-                          REMOVE FROM CART
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          className="btn mb-2 rounded-pill"
-                          onClick={() => handleAddToCart(products)}
-                          style={{ backgroundColor: "lightGray", color: "black" }}
-                        >
-                          ADD TO CART
-                        </button>
-                      )}
-                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {!!userCart.find((item: Product) => item._id === products._id) ? (
+                      <button
+                        type="button"
+                        className="btn my-2 rounded-pill"
+                        onClick={() => handleAddToCart(products)}
+                        style={{ backgroundColor: "black", color: "white" }}
+                      >
+                        REMOVE FROM CART
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn mb-2 rounded-pill"
+                        onClick={() => handleAddToCart(products)}
+                        style={{ backgroundColor: "lightGray", color: "black" }}
+                      >
+                        ADD TO CART
+                      </button>
+                    )}
+                    {userInfo.isAdmin && (
+                      <div style={{ border: "2px solid #48937e", borderRadius: "8px" }}>
+                        <Link to={`products/update-product/${products._id}`}>
+                          <i className="bi bi-pencil-square px-1"></i>
+                        </Link>
+                        <Link to={""} onClick={() => handleDeleteProduct(products._id as string)}>
+                          <i className="bi bi-trash text-danger"></i>
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))
