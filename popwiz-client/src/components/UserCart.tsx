@@ -14,6 +14,7 @@ interface UserCartProps {
 const UserCart: FunctionComponent<UserCartProps> = ({ userInfo, setUserInfo }) => {
   let [products, setProducts] = useState<Product[]>([]);
   let [CartChanged, setCartChanged] = useState<boolean>(false);
+  const sum = products ? products.reduce((total, item) => total + item.price, 0) : null;
 
   useEffect(() => {
     getCart(userInfo._id)
@@ -59,6 +60,13 @@ const UserCart: FunctionComponent<UserCartProps> = ({ userInfo, setUserInfo }) =
                     </td>
                   </tr>
                 ))}
+                <tr style={{ border: "3px solid black" }}>
+                  <td>Order Subtotal:</td>
+                  <td></td>
+                  <td></td>
+                  <td>{sum}$</td>
+                  <td></td>
+                </tr>
               </tbody>
             </table>
             <div>

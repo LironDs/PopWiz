@@ -4,9 +4,9 @@
 
   
 
-My name is Liron David-Shiloah and this is my React+Node.js project.
+My name is Liron David-Shiloah and this is my final Fullstack project.
 
-It was written as part of a full stack course, In this file I have added guidance and notes that will make it easier for you to explore the application.
+In this file I have added guidance and notes that will make it easier for you to explore the application.
 
   
 
@@ -28,10 +28,9 @@ npm start
 ```
 nodemon
 ```
-
-**In order for the server to connect to MongoDB Atlas, please insert the .env file you received separately.**
-
-## The table below gives you 2 types of users with different permissions, you are welcome to try them all.<br> Each user will give you different permission and different menus.
+<span style="color: red;font-weight: bold; text-align: end" > In order for the server to connect to MongoDB Atlas, please insert the .env file you received separately. </span>
+<hr>
+ The table below gives you 2 types of users with different permissions, you are welcome to try them all.<br> Each user will give you different permission and different menus.
 
 
 |	Role  | Mail 			      | Password  | 

@@ -6,7 +6,8 @@ const About: FunctionComponent<AboutProps> = () => {
   return (
     <>
       <div className="container" style={{ minHeight: "71vh", maxWidth: "75vw", fontSize: "17pt" }}>
-        <h1 style={{ backgroundColor: "oldlace" }}>ABOUT US...</h1>
+        <h1 style={{ backgroundColor: "oldlace", display: "inline-block" }}>ABOUT US...</h1>
+        <hr />
         Welcome to PopWiz, your premier destination for Pop Figures! Immerse yourself in the
         enchanting world of collectibles curated with love and passion. At PopWiz, we're not just
         sellers; we're storytellers, bringing iconic characters from beloved franchises to life. Our

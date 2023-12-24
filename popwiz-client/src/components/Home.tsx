@@ -37,10 +37,13 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
         const { action, message } = res.data;
 
         if (action === "add") {
+          setUserCart([...userCart, products]);
           successMsg("Product added to cart");
         } else if (action === "remove") {
+          setUserCart(userCart.filter((item: any) => item._id !== products._id));
           successMsg("Product removed from cart");
         }
+        // add the item to the userCart here
       } else {
         errorMsg("You need to sign in");
       }
@@ -68,7 +71,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
       // Call onHide when Home is not displayed anymore
       onHide();
     };
-  }, [onDisplay, userCart]);
+  }, [onDisplay]);
 
   return (
     <>
@@ -109,6 +112,7 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
             </a>
           </div>
         </div>
+
         <div className="container row justify-content-center mb-5">
           {products.length ? (
             products
