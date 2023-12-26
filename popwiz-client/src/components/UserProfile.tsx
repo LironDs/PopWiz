@@ -42,7 +42,13 @@ const UserProfile: FunctionComponent<UserProfileProps> = ({ userInfo, setUserInf
       firstName: yup.string().required().min(2),
       lastName: yup.string().required().min(2),
       email: yup.string().required().email(),
-      password: yup.string().required().min(8),
+      password: yup
+        .string()
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d.*\d.*\d.*\d)(?=.*[!@#$%^&*-_]).{8,}$/,
+          "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, at least 4 numbers, and one special character"
+        )
+        .required(),
     }),
     onSubmit: (values) => {
       updateUser(String(_id), values)

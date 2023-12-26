@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const joi = require("joi");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
 const auth = require("../middlewares/auth");
@@ -34,8 +35,9 @@ router.put("/:_id", auth, async (req, res) => {
   try {
     // joi validation for body
     const { error } = userSchema.validate(req.body);
-    if (error) return res.status(400).send(error);
-
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
     let userToUpdate = await User.findById(req.params._id);
 
     ///check if user exist
@@ -48,8 +50,13 @@ router.put("/:_id", auth, async (req, res) => {
     }
 
     if (req.body.password) {
-      const salt = await bcrypt.genSalt(10);
-      req.body.password = await bcrypt.hash(req.body.password, salt);
+      try {
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
+      } catch (error) {
+        console.error("Error hashing password:", error);
+        return res.status(500).send("Internal Server Error");
+      }
     }
     userToUpdate = await User.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true });
     res.status(200).send(userToUpdate);
