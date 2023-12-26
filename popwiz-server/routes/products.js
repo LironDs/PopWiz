@@ -18,7 +18,6 @@ const productSchema = joi.object({
 
 router.get("/search", async (req, res) => {
   const searchTerm = req.query.searchTerm;
-  console.log("Received search request with searchTerm:", searchTerm);
 
   try {
     const products = await Product.find({

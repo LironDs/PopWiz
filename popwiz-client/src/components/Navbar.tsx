@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TokenDetails } from "../App";
 import { successMsg } from "../services/feedbacksServices";
@@ -13,7 +13,6 @@ interface NavbarProps {
 const Navbar: FunctionComponent<NavbarProps> = ({
   userInfo,
   setUserInfo,
-  searchValue,
   setSearchValue,
   showSearchField,
 }) => {

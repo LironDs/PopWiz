@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/auth");
-
+const mongoose = require("mongoose");
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 
@@ -50,10 +50,28 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+///clear user cart after payment
+router.put("/empty-cart/:_id", async (req, res) => {
+  try {
+    let userCart = await Cart.findOne({ userId: req.params._id });
+
+    if (!userCart) {
+      return res.status(400).send("User cart not found");
+    }
+
+    userCart.products = []; // Clear the products array
+    await userCart.save(); // Save the changes
+
+    res.status(200).json({ message: "Cart Cleared Successfully!", userCart });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 ///get user cart by userId
 router.get("/", auth, async (req, res) => {
   try {
-    ///check if id match
     let userCart = await Cart.findOne({ userId: req.payload._id });
     if (!userCart) return res.status(400).send("user not found");
 

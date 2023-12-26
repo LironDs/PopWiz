@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { FunctionComponent } from "react";
+import { emptyCart } from "../services/cartsServices";
+import { Navigate, useNavigate } from "react-router-dom";
 
-interface ModalProps {}
+interface ModalProps {
+  userInfo: any;
+}
 
-const Modal: FunctionComponent<ModalProps> = () => {
+const Modal: FunctionComponent<ModalProps> = ({ userInfo }) => {
+  let navigate = useNavigate();
+
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -14,9 +20,14 @@ const Modal: FunctionComponent<ModalProps> = () => {
     setShowModal(false);
   };
 
+  const handleEmptyCart = () => {
+    emptyCart(userInfo._id);
+    handleCloseModal();
+    navigate("/");
+  };
   return (
     <>
-      <button type="button" className="btn btn-primary" onClick={handleShowModal}>
+      <button type="button" className="btn btn-primary " onClick={handleShowModal}>
         <i className="bi bi-credit-card"> Pay Now</i>
       </button>
 
@@ -41,7 +52,7 @@ const Modal: FunctionComponent<ModalProps> = () => {
             </div>
             <div className="modal-body">Your order will be processed and delivered in 2-4 days</div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary btn-lg" onClick={handleCloseModal}>
+              <button type="button" className="btn btn-primary btn-lg" onClick={handleEmptyCart}>
                 SUPERB!
               </button>
             </div>

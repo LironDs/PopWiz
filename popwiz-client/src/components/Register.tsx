@@ -24,7 +24,13 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
       firstName: yup.string().required().min(2),
       lastName: yup.string().required().min(2),
       email: yup.string().required().email(),
-      password: yup.string().required().min(8),
+      password: yup
+        .string()
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d.*\d.*\d.*\d)(?=.*[!@#$%^&*-_]).{8,}$/,
+          "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, at least 4 numbers, and one special character"
+        )
+        .required(),
     }),
     onSubmit(values) {
       addUser({ ...values, isAdmin: false })
@@ -59,7 +65,6 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
                   type="text"
                   className="form-control"
                   id="firstName"
-                  // placeholder="John Doe"
                   name="firstName"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
@@ -104,7 +109,7 @@ const Register: FunctionComponent<RegisterProps> = ({ setUserInfo, userInfo }) =
               </div>
               <div className="form-floating  col-md-3">
                 <input
-                  type="text"
+                  type="password"
                   className="form-control"
                   id="password"
                   name="password"

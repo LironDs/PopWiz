@@ -53,7 +53,6 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
                 type="email"
                 className="form-control"
                 id="email"
-                // placeholder="John Doe"
                 name="email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -69,7 +68,6 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
                 type="text"
                 className="form-control"
                 id="password"
-                // placeholder="John Doe"
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}

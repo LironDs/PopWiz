@@ -26,6 +26,13 @@ export async function updateCart(productToAdd: Product) {
     throw error;
   }
 }
+export async function emptyCart(userId: string) {
+  try {
+    return await axios.put(`${api}/empty-cart/${userId}`);
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function addOrRemoveProduct(productToAdd: Product) {
   try {

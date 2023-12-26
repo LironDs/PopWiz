@@ -64,8 +64,6 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
     }
   };
   useEffect(() => {
-    console.log("Calling useEffect");
-
     onDisplay();
     handleLicense("");
 
@@ -77,9 +75,6 @@ const Home: FunctionComponent<HomeProps> = ({ userInfo, searchValue, onDisplay, 
     }
 
     return () => {
-      console.log("Calling onHide");
-
-      // Call onHide when Home is not displayed anymore
       onHide();
     };
   }, [onDisplay]);

@@ -1,9 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import Cart from "../interfaces/Cart";
-import { addOrRemoveProduct, getCart, updateCart } from "../services/cartsServices";
+import { getCart, updateCart } from "../services/cartsServices";
 import Product from "../interfaces/Product";
 import { Link } from "react-router-dom";
-import { error } from "console";
 import Modal from "./Modal";
 
 interface UserCartProps {
@@ -21,7 +19,7 @@ const UserCart: FunctionComponent<UserCartProps> = ({ userInfo, setUserInfo }) =
       .then((res) => {
         setProducts(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [CartChanged]);
 
   const handleDeleteFromCart = (product: Product) => {
@@ -70,7 +68,7 @@ const UserCart: FunctionComponent<UserCartProps> = ({ userInfo, setUserInfo }) =
               </tbody>
             </table>
             <div>
-              <Modal />
+              <Modal userInfo={userInfo} />
             </div>
           </>
         ) : (

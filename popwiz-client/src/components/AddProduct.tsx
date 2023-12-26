@@ -38,7 +38,6 @@ const AddProduct: FunctionComponent<AddProductProps> = ({ userInfo, setUserInfo 
       inStock: yup.string().required(),
     }),
     onSubmit: (values) => {
-      console.log(values);
       addProduct(values)
         .then((res) => {
           navigate("/");
@@ -99,7 +98,6 @@ const AddProduct: FunctionComponent<AddProductProps> = ({ userInfo, setUserInfo 
             {/* description */}
             <div className="form-floating mb-2 col">
               <textarea
-                // rows="3"
                 className="form-control"
                 id="description"
                 placeholder="Product description"
@@ -196,13 +194,10 @@ const AddProduct: FunctionComponent<AddProductProps> = ({ userInfo, setUserInfo 
                 <select
                   className="form-control form-select"
                   id="inStock"
-                  //   placeholder="select category"
                   name="inStock"
-                  // value={formik.values.inStock}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
-                  {/* <option value="DEFAULT">Choose one</option> */}
                   <option selected>Choose one</option>
 
                   <option value="true">In Stock</option>
