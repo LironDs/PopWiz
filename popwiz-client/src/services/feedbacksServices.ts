@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 
 export function successMsg(message: string) {
   toast.success(message, {
-    position: toast.POSITION.TOP_RIGHT,
+    position: toast.POSITION.TOP_CENTER,
     autoClose: 3000,
   });
 }
 export function errorMsg(message: string) {
   toast.error(message, {
-    position: toast.POSITION.TOP_RIGHT,
+    position: toast.POSITION.TOP_CENTER,
     autoClose: 3000,
   });
 }
