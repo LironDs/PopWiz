@@ -65,7 +65,7 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
             </div>
             <div className="form-floating">
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="password"
                 name="password"
@@ -90,6 +90,33 @@ const Login: FunctionComponent<LoginProps> = ({ userInfo, setUserInfo }) => {
             Not a user yet? Register here
           </Link>
         </form>
+        <div
+          className="container"
+          style={{ textAlign: "center", position: "fixed", bottom: "70px" }}
+        >
+          <h2>Feel free to register yourself or try one of our users!</h2>
+          <table className="table table-bordered w-50 text-center mx-auto">
+            <thead>
+              <tr className="table-primary">
+                <th className="role">role</th>
+                <th className="mail">E-mail</th>
+                <th className="password">password</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>admin </td>
+                <td>admin@gmail.com</td>
+                <td>!Q2w3e4r5t</td>
+              </tr>
+              <tr>
+                <td>user </td>
+                <td>user@gmail.com </td>
+                <td>!Q2w3e4r5t</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
