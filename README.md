@@ -40,5 +40,7 @@ nodemon
 
 
 
-<p style="color: #86BAA1 ; font-weight: bold; align: center"> In order to see the site in action without downloading the files, you can enter this link ➡️ [Netlify PopWiz](https://popwiz.netlify.app/).
-The server takes about 60 seconds to connect, so you can click on the link and reload after about a minute. </p>
+
+> [!IMPORTANT]
+> In order to see the site in action without downloading the files, you can enter this link ➡️ [Netlify PopWiz](https://popwiz.netlify.app/).
+The server takes about 60 seconds to connect, so you can click on the link and reload after about a minute.
