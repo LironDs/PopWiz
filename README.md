@@ -28,14 +28,17 @@ npm start
 ```
 nodemon
 ```
-<span style="color: red;font-weight: bold; text-align: end" > In order for the server to connect to MongoDB Atlas, please insert the .env file you received separately. </span>
+<span style="color: red;font-weight: bold" > In order for the server to connect to MongoDB Atlas, please insert the .env file you received separately. </span>
 <hr>
  The table below gives you 2 types of users with different permissions, you are welcome to try them all.<br> Each user will give you different permission and different menus.
 
 
-|	Role  | Mail 			      | Password  | 
-|:-------:|:---------------------:|:---------:|
-| `Admin` | `admin@gmail.com` 	  | `!2345Qwe`|     
-| `User`  | `hanalaslo@gmail.com` | `!2345Qwe`|       
+|	Role  | Mail 			      | Password    | 
+|:-------:|:---------------------:|:-----------:|
+| `Admin` | `admin@gmail.com` 	  | `!Q2w3e4r5t`|     
+| `User`  | `hanalaslo@gmail.com` | `!Q2w3e4r5t`|       
 
 
+
+<p style="color: #86BAA1 ; font-weight: bold; text-align: center"> In order to see the site in action without downloading the files, you can enter this link ➡️ [Netlify PopWiz](https://popwiz.netlify.app/).
+The server takes about 60 seconds to connect, so you can click on the link and reload after about a minute. </p>
